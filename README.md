@@ -169,8 +169,8 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 **Kaua Cruz**
 - 💼 Software Engineer & Cloud Computing Specialist
-- 📧 Email: [seu-email@exemplo.com]
-- 💼 LinkedIn: [seu-linkedin]
+- 📧 Email: [kauafelintoc@gmail.com]
+- 💼 LinkedIn: [www.linkedin.com/in/kauã-felinto]
 - 🐙 GitHub: [KauaFelinto](https://github.com/KauaFelinto)
 
 ---
