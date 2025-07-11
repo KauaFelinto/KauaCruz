@@ -1,0 +1,359 @@
+.certificacoes {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 2rem 4rem 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.certificacoes-content {
+  overflow: hidden; /* Prevenir scrollbars desnecessárias */
+}
+
+.certificacoes-container {
+  overflow: hidden; /* Prevenir scrollbars desnecessárias */
+}
+
+.certificacoes-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+  transition: color 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.academic-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  color: #555;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease 0.2s;
+}
+
+.academic-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  margin-top: 3rem;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.certifications-section,
+.education-section {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.certifications-section h3,
+.education-section h3 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+  transition: color 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+.certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  justify-items: center;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.education-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  justify-items: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.certification-card,
+.education-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  opacity: 0;
+  transform: translateY(30px);
+  width: 100%;
+  max-width: 350px;
+}
+
+.certificacoes.animate .certification-card,
+.certificacoes.animate .education-card {
+  animation: slideInUp 0.6s ease-out forwards;
+}
+
+.certification-card:hover,
+.education-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  border-color: #4f46e5;
+  text-decoration: none;
+  color: inherit;
+}
+
+.certification-image,
+.education-image {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.certification-image img,
+.education-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.certification-card:hover .certification-image img,
+.education-card:hover .education-image img {
+  transform: scale(1.05);
+}
+
+.certification-info,
+.education-info {
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.certification-info h4,
+.education-info h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.certification-issuer,
+.education-institution {
+  font-size: 1rem;
+  color: #4f46e5;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.certification-date,
+.education-period {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.education-status {
+  font-size: 0.85rem;
+  color: #10b981;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Animações quando a seção se torna visível */
+.certificacoes.animate h2 {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.certificacoes.animate .academic-description {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.certificacoes.animate .certifications-section h3 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+
+.certificacoes.animate .education-section h3 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+
+/* Dark mode styles */
+body.dark-mode .certificacoes-content h2 {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+body.dark-mode .academic-description {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+body.dark-mode .certifications-section h3,
+body.dark-mode .education-section h3 {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.dark-mode .certification-card,
+body.dark-mode .education-card {
+  background: #374151;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-color: #4b5563;
+}
+
+body.dark-mode .certification-card:hover,
+body.dark-mode .education-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  border-color: #8b5cf6;
+}
+
+body.dark-mode .certification-info h4,
+body.dark-mode .education-info h4 {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.dark-mode .certification-issuer,
+body.dark-mode .education-institution {
+  color: #8b5cf6;
+}
+
+body.dark-mode .certification-date,
+body.dark-mode .education-period {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+body.dark-mode .education-status {
+  color: #10b981;
+}
+
+body.dark-mode .certification-image,
+body.dark-mode .education-image {
+  background: #4b5563;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .certificacoes {
+    padding: 4rem 1rem 2rem 1rem;
+    overflow-x: hidden;
+  }
+  
+  .certifications-grid,
+  .education-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .certification-card,
+  .education-card {
+    max-width: 100%;
+  }
+  
+  .certificacoes-content h2 {
+    font-size: 2rem;
+  }
+  
+  .certifications-section h3,
+  .education-section h3 {
+    font-size: 1.5rem;
+  }
+  
+  .academic-sections {
+    gap: 3rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .certifications-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .education-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    max-width: 700px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .certifications-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  
+  .education-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 480px) {
+  .certificacoes {
+    overflow-x: hidden;
+  }
+  
+  .certificacoes-content h2 {
+    font-size: 1.8rem;
+  }
+  
+  .academic-description {
+    margin-bottom: 2rem;
+  }
+  
+  .certifications-grid,
+  .education-grid {
+    overflow-x: hidden;
+    width: 100%;
+  }
+}
+
+/* Animation keyframes */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
