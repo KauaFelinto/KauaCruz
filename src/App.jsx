@@ -382,11 +382,7 @@ function App() {
               
               <div className='header-controls-mobile'>
                 <button onClick={toggleLanguage} className="language-toggle-mobile">
-                  {language === 'pt' ? (
-                    <span style={{fontSize: '16px'}}>🇺🇸 EN</span>
-                  ) : (
-                    <span style={{fontSize: '16px'}}>🇧🇷 PT</span>
-                  )}
+                  {language === 'pt' ? '🇺🇸 EN' : '🇧🇷 PT'}
                 </button>
                 <button onClick={toggleDarkMode} className="theme-toggle-mobile">
                   {darkMode ? <MdOutlineDarkMode /> : <MdLightMode />}
@@ -468,11 +464,7 @@ function App() {
 
             <div className='header-controls'>
               <button onClick={toggleLanguage} className="language-toggle">
-                {language === 'pt' ? (
-                  <span style={{fontSize: '16px'}}>🇺🇸 EN</span>
-                ) : (
-                  <span style={{fontSize: '16px'}}>🇧🇷 PT</span>
-                )}
+                {language === 'pt' ? '🇺🇸 EN' : '🇧🇷 PT'}
               </button>
               <button onClick={toggleDarkMode} className="theme-toggle">
                 {darkMode ? <MdOutlineDarkMode id='dark-mode-icon'/> : <MdLightMode />}
