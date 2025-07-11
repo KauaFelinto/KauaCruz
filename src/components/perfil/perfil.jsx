@@ -9,7 +9,7 @@ function Perfil({ translations }) {
           <p className="subtitulo">{translations.subtitle}</p>
         </div>
         <div className="apresentacao-imagem">
-          <img src="../../../public/cloud.png" alt="Cloud Computing" />
+          <img src="/cloud.png" alt="Cloud Computing" />
         </div>
       </div>
     </section>

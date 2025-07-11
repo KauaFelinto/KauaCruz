@@ -48,7 +48,7 @@ function About({ translations }) {
           </div>
         </div>
         <div className="about-image">
-          <img src="../../../public/cloud-dev.png" alt={translations.aboutImageAlt} />
+          <img src="/cloud-dev.png" alt={translations.aboutImageAlt} />
         </div>
       </div>
     </section>
