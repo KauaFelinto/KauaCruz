@@ -70,9 +70,9 @@ body {
 }
 
 /* Responsive utilities */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .container {
-    padding: 0 0.8rem;
+    padding: 0 1rem;
   }
   
   .hidden-mobile {
@@ -93,6 +93,12 @@ body {
   
   .mobile-full-width {
     width: 100% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.8rem;
   }
 }
 

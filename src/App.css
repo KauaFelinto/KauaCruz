@@ -23,6 +23,10 @@ html, body {
   width: 100%;
 }
 
+section#contact{
+  height: 120vh;
+}
+
 /* CSS Variables */
 :root {
   --primary-color: #3b82f6;
@@ -104,6 +108,8 @@ body.dark-mode {
   align-items: center;
   padding: 1rem;
   min-height: 70px;
+  position: relative;
+  z-index: 1001;
 }
 
 .header-title {
@@ -117,13 +123,15 @@ body.dark-mode {
   margin: 0;
   font-size: 1.4rem;
   font-weight: 600;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
   color: var(--text-color);
   text-align: center;
-  flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: calc(100% - 160px); /* Reserva espaço para os controles */
 }
 
 .header-nav {
@@ -173,29 +181,14 @@ body.dark-mode {
   gap: 1rem;
 }
 
+/* Controles antigos - não mais utilizados
 .header-controls-mobile {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
-  min-width: 80px; /* Largura mínima para os controles */
-  justify-content: flex-end; /* Alinha os botões à direita */
-}
-
-.language-selector {
-  display: flex;
-  align-items: center;
-}
-
-.language-toggle {
-  background: none;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  font-size: 0.9rem;
-  padding: 0.5rem 0.8rem;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  font-weight: 500;
+  min-width: 80px;
+  justify-content: flex-end;
 }
 
 .language-toggle-mobile,
@@ -213,16 +206,12 @@ body.dark-mode {
   justify-content: center;
 }
 
-.language-toggle:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  border-color: #4f46e5;
-}
-
 .language-toggle-mobile:hover,
 .theme-toggle-mobile:hover {
   background-color: rgba(0, 0, 0, 0.05);
   border-color: var(--primary-color);
 }
+*/
 
 .mode {
   display: flex;
@@ -259,11 +248,38 @@ body.dark-mode {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  min-width: 40px; /* Largura mínima para balancear o layout */
+  min-width: 44px;
+  min-height: 44px;
+  position: relative;
+  z-index: 1002;
+  touch-action: manipulation;
 }
 
 .mobile-menu-toggle:hover {
   background-color: rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.mobile-menu-toggle:active {
+  background-color: rgba(0, 0, 0, 0.2);
+  transform: scale(0.95);
+}
+
+.mobile-menu-toggle:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Garantir que o botão seja sempre visível e acessível */
+.mobile-menu-toggle {
+  outline: none;
+  border: 2px solid transparent;
+}
+
+.mobile-menu-toggle:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
 }
 
 /* Overlay para menu mobile */
@@ -328,10 +344,13 @@ main {
 /* Section spacing */
 main {
   padding-top: 100px; /* Espaço para o header fixo */
+  width: 100%;
+  min-height: 100vh;
 }
 
 main section {
   scroll-margin-top: 100px;
+  width: 100%;
 }
 
 /* Smooth scroll behavior */
@@ -349,6 +368,77 @@ html, body {
 body {
   margin: 0;
   padding: 0;
+}
+
+/* Section spacing to prevent overlaps */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+section#about {
+  margin-bottom: 2rem;
+}
+
+section#projects {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+section#academic {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  margin-bottom: 4rem;
+}
+
+section#contact {
+  margin-top: 4rem;
+  padding-top: 3rem;
+}
+
+/* Responsive section spacing */
+@media (max-width: 1024px) {
+  section#about {
+    margin-bottom: 1.5rem;
+  }
+  
+  section#projects {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  section#academic {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  section#contact {
+    margin-top: 3rem;
+    padding-top: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  section#about {
+    margin-bottom: 1rem;
+  }
+  
+  section#projects {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  section#academic {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  section#contact {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
 }
 
 /* Fix for very small screens */
@@ -389,55 +479,119 @@ body {
   }
 }
 
-/* Responsive Media Queries */
-@media (max-width: 768px) {
+/* Responsive Media Queries Atualizados */
+@media (max-width: 1024px) {
   .app-header {
-    padding: 1rem;
-    gap: 1rem;
-    min-height: auto;
+    padding: 1rem 1.5rem;
   }
   
-  .app-header h1 {
-    font-size: 1.5rem;
-    order: 1;
+  .desktop-header {
+    padding: 1rem 1.5rem;
   }
   
-  .header-controls {
-    position: static;
-    transform: none;
-    order: 2;
-    gap: 0.8rem;
-  }
-  
-  .language-toggle,
-  .theme-toggle {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.8rem;
-  }
-
   .header-nav {
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 1.5rem;
   }
-
+  
   .nav-item {
-    font-size: 0.9rem;
-    padding: 0.6rem 1rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
   }
-
-  .header-controls {
-    margin-top: 0.5rem;
+  
+  main {
+    padding-top: 90px;
   }
-
-  .header-title {
-    font-size: 1.5rem;
+  
+  main section {
+    scroll-margin-top: 90px;
   }
+  
+  /* Garantir que o layout seja responsivo */
+  body {
+    font-size: 16px; /* Prevenir zoom automático no iOS */
+  }
+  
+  /* Melhorar o touch target size */
+  .mobile-nav-item {
+    min-height: 44px; /* Tamanho mínimo recomendado para touch */
+    padding: 1rem 2rem;
+  }
+  
+  .mobile-menu-language,
+  .mobile-menu-theme {
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+  }
+  
+  .mobile-menu-toggle {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
 
+@media (max-width: 768px) {
   .mobile-header {
-    padding: 1rem;
-    gap: 1rem;
-    min-height: auto;
+    position: relative;
+    z-index: 1001;
+    padding: 0.8rem 1rem;
+  }
+
+  .header-title-mobile {
+    padding: 0 1rem;
+    min-width: 0;
+    font-size: 1.3rem;
+  }
+  
+  main {
+    padding-top: 80px;
+  }
+  
+  main section {
+    scroll-margin-top: 80px;
+  }
+  
+  /* Ajustar viewport para mobile */
+  .mobile-header {
+    min-height: 60px;
+  }
+  
+  /* Melhorar espaçamento dos carrosséis */
+  .projects-carousel,
+  .certifications-carousel,
+  .education-carousel {
+    margin-bottom: 2rem;
+  }
+  
+  /* Garantir que os cards não sejam cortados */
+  .project-card,
+  .certification-card,
+  .education-card {
+    margin: 0.5rem;
+    box-sizing: border-box;
+  }
+}
+
+/* Additional mobile performance and scroll improvements */
+@media (max-width: 768px) {
+  /* Improve scroll performance on mobile */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Prevent zoom on form inputs */
+  input, textarea, select {
+    font-size: 16px;
+  }
+  
+  /* Improve touch target sizes */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Smooth section transitions */
+  section {
+    scroll-margin-top: 80px;
   }
 }
 
@@ -476,18 +630,24 @@ body {
   .header-title {
     font-size: 1.3rem;
   }
-}
-
-/* Ajustes adicionais para o layout mobile */
-@media (max-width: 768px) {
-  .mobile-header {
-    position: relative;
-    z-index: 1001;
+  
+  /* Ajustes para telas pequenas */
+  .mobile-menu-controls {
+    padding: 1rem 1.5rem;
+    gap: 1rem;
   }
-
-  .header-title-mobile {
-    padding: 0 1rem;
-    min-width: 0; /* Permite que o texto seja truncado */
+  
+  .mobile-menu-language,
+  .mobile-menu-theme {
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+  }
+  
+  /* Melhorar tamanho dos botões do carrossel */
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
   }
 }
 
@@ -498,31 +658,62 @@ body {
 
   .mobile-header {
     padding: 0.6rem;
-  }
-
-  .language-toggle-mobile {
-    font-size: 0.6rem;
-    padding: 0.25rem 0.4rem;
-    min-width: 30px;
-  }
-
-  .theme-toggle-mobile {
-    padding: 0.25rem;
-    min-width: 30px;
-    min-height: 30px;
-    font-size: 0.9rem;
+    min-height: 55px;
   }
 
   .mobile-menu-toggle {
     font-size: 1.2rem;
     padding: 0.3rem;
   }
+  
+  /* Ajustes para telas muito pequenas */
+  .mobile-menu-controls {
+    padding: 0.8rem 1rem;
+    gap: 0.8rem;
+  }
+  
+  .mobile-menu-language,
+  .mobile-menu-theme {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
+  }
+  
+  .carousel-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+  
+  .indicator {
+    width: 10px;
+    height: 10px;
+  }
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  main {
-    padding-top: 90px; /* Ajustar para header mobile */
+/* Media queries para os novos controles do menu mobile */
+@media (max-width: 480px) {
+  .mobile-menu-controls {
+    padding: 0.8rem 1.5rem;
+    gap: 0.8rem;
+  }
+
+  .mobile-menu-language,
+  .mobile-menu-theme {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .mobile-menu-controls {
+    padding: 0.6rem 1rem;
+    gap: 0.6rem;
+  }
+
+  .mobile-menu-language,
+  .mobile-menu-theme {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
   }
 }
 
@@ -536,19 +727,21 @@ body {
     min-height: 60px;
   }
 
+  /* Estilos antigos comentados
   .language-toggle-mobile,
   .theme-toggle-mobile {
     font-size: 0.7rem;
     padding: 0.3rem 0.5rem;
   }
 
+  .header-controls-mobile {
+    gap: 0.3rem;
+  }
+  */
+
   .mobile-menu-toggle {
     font-size: 1.3rem;
     padding: 0.4rem;
-  }
-
-  .header-controls-mobile {
-    gap: 0.3rem;
   }
 
   main {
@@ -607,6 +800,62 @@ body {
   border-left-color: var(--primary-color);
 }
 
+/* Estilos para controles dentro do menu mobile */
+.mobile-menu-controls {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+  border-top: 1px solid #eaeaea;
+  gap: 1rem;
+}
+
+.mobile-menu-language,
+.mobile-menu-theme {
+  background: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.mobile-menu-language:hover,
+.mobile-menu-theme:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.mobile-menu-theme {
+  font-size: 1.2rem;
+}
+
+/* Dark mode para controles do menu mobile */
+body.dark-mode .mobile-menu-controls {
+  border-top-color: #333;
+}
+
+body.dark-mode .mobile-menu-language,
+body.dark-mode .mobile-menu-theme {
+  border-color: #555;
+}
+
+body.dark-mode .mobile-menu-language:hover,
+body.dark-mode .mobile-menu-theme:hover {
+  background-color: rgba(59, 130, 246, 0.2);
+  border-color: var(--primary-color);
+}
+
 /* Dark mode mobile styles */
 body.dark-mode .mobile-nav {
   background-color: rgba(36, 36, 36, 0.98);
@@ -618,6 +867,7 @@ body.dark-mode .mobile-menu-toggle:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Estilos antigos comentados
 body.dark-mode .language-toggle-mobile,
 body.dark-mode .theme-toggle-mobile {
   border-color: #555;
@@ -628,6 +878,7 @@ body.dark-mode .theme-toggle-mobile:hover {
   background-color: rgba(255, 255, 255, 0.1);
   border-color: var(--primary-color);
 }
+*/
 
 body.dark-mode .mobile-nav-item:hover {
   background-color: rgba(59, 130, 246, 0.2);
@@ -658,4 +909,412 @@ body.dark-mode .nav-item.active {
 [style*="display: grid"], 
 [style*="display:grid"] {
   overflow-x: hidden;
+}
+
+/* Melhorias para touch/swipe nos carrosséis */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  touch-action: pan-y pinch-zoom;
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+  will-change: transform;
+}
+
+/* Garantir que os carrosséis não causem overflow horizontal */
+.projects-carousel,
+.certifications-carousel,
+.education-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  overflow: visible;
+  padding-bottom: 2rem;
+  contain: layout style;
+}
+
+/* Correção para botões de navegação em mobile */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.carousel-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #333;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.carousel-btn:hover,
+.carousel-btn:focus {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+  outline: none;
+}
+
+.carousel-btn:active {
+  transform: scale(0.95);
+}
+
+/* Viewport e melhorias específicas para mobile */
+@media (max-width: 1024px) {
+  /* Prevenir scroll horizontal indesejado */
+  html, body {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+  
+  /* Melhorar performance do scroll em dispositivos móveis */
+  .carousel-container {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* Garantir que todos os elementos respeitem a largura da tela */
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Melhorar a usabilidade dos botões em dispositivos touch */
+  button, .btn, .carousel-btn, .indicator {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  /* Melhorar a legibilidade em telas pequenas */
+  @media (max-width: 480px) {
+    body {
+      font-size: 14px;
+    }
+    
+    /* Ajustar espaçamento geral */
+    .container, .section {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  
+  @media (max-width: 360px) {
+    body {
+      font-size: 13px;
+    }
+    
+    .container, .section {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+  }
+}
+
+/* Estilos para indicador de idioma ativo */
+.language-toggle,
+.mobile-menu-language {
+  position: relative;
+}
+
+.language-toggle::after,
+.mobile-menu-language::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.language-toggle:hover::after,
+.mobile-menu-language:hover::after {
+  width: 80%;
+}
+
+/* Language Dropdown Styles */
+.language-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.language-toggle {
+  background: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  color: var(--text-color);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 100px;
+  justify-content: space-between;
+}
+
+.language-toggle:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.language-current {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.dropdown-arrow {
+  font-size: 0.7rem;
+  transition: transform 0.3s ease;
+}
+
+.language-dropdown.open .dropdown-arrow {
+  color: var(--primary-color);
+}
+
+.language-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-shadow: var(--card-shadow);
+  z-index: 1000;
+  margin-top: 0.25rem;
+  overflow: hidden;
+  animation: dropdownFadeIn 0.2s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.language-option:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--primary-color);
+}
+
+.language-option.active {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.language-option.active::after {
+  content: '✓';
+  margin-left: auto;
+  font-size: 0.8rem;
+}
+
+/* Melhorias visuais para o dropdown */
+.language-dropdown.open .language-toggle {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.language-dropdown.open .dropdown-arrow {
+  color: var(--primary-color);
+}
+
+.language-dropdown-menu {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Melhorar hover e focus states */
+.language-toggle:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.language-option:focus {
+  outline: none;
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--primary-color);
+}
+
+/* Separador sutil entre opções */
+.language-option:not(:last-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .language-option:not(:last-child) {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Melhorar dark mode */
+body.dark-mode .language-dropdown.open .language-toggle {
+  background-color: rgba(59, 130, 246, 0.2);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+/* Dark mode para dropdown de idiomas */
+body.dark-mode .language-toggle {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.dark-mode .language-toggle:hover {
+  background-color: rgba(59, 130, 246, 0.2);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+body.dark-mode .language-dropdown-menu {
+  background: var(--card-bg);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .language-option {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.dark-mode .language-option:hover {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: var(--primary-color);
+}
+
+body.dark-mode .language-option.active {
+  background-color: rgba(59, 130, 246, 0.25);
+  color: var(--primary-color);
+}
+
+/* Melhorar tooltip para idiomas */
+.language-toggle:hover::before,
+.mobile-menu-language:hover::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-bottom: 5px;
+}
+
+body.dark-mode .language-toggle:hover::before,
+body.dark-mode .mobile-menu-language:hover::before {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000;
+}
+
+/* Responsive para dropdown de idiomas */
+@media (max-width: 1024px) {
+  .language-dropdown {
+    position: static;
+  }
+  
+  .language-toggle {
+    min-width: 90px;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .language-dropdown-menu {
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .language-dropdown {
+    display: none; /* Esconder dropdown no mobile - usar o sistema existente */
+  }
+}
+
+@media (max-width: 480px) {
+  .language-toggle {
+    min-width: 80px;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .language-option {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Desktop specific improvements */
+@media (min-width: 1024px) {
+  /* Ensure proper section spacing on large screens */
+  section {
+    scroll-margin-top: 100px;
+  }
+  
+  /* Improve hover states for desktop */
+  .nav-item:hover {
+    transform: translateY(-1px);
+  }
+  
+  /* Better focus indicators for keyboard navigation */
+  .nav-item:focus,
+  .language-toggle:focus,
+  .theme-toggle:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
 }

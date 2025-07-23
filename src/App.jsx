@@ -9,12 +9,28 @@ import Contact from './components/contact/contact';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
-  const [language, setLanguage] = useState('pt')
+  
+  // Detectar idioma preferido do navegador
+  const getDefaultLanguage = () => {
+    const savedLanguage = localStorage.getItem('preferred-language')
+    if (savedLanguage && ['pt', 'en', 'es'].includes(savedLanguage)) {
+      return savedLanguage
+    }
+    
+    const browserLang = navigator.language.toLowerCase()
+    if (browserLang.startsWith('es')) return 'es'
+    if (browserLang.startsWith('en')) return 'en'
+    return 'pt' // padrão
+  }
+  
+  const [language, setLanguage] = useState(getDefaultLanguage())
+  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [headerVisible, setHeaderVisible] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  const [menuToggleDisabled, setMenuToggleDisabled] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024)
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode)
@@ -22,7 +38,36 @@ function App() {
   }
 
   const toggleLanguage = () => {
-    setLanguage(language === 'pt' ? 'en' : 'pt')
+    let newLanguage
+    if (language === 'pt') {
+      newLanguage = 'en'
+    } else if (language === 'en') {
+      newLanguage = 'es'
+    } else {
+      newLanguage = 'pt'
+    }
+    
+    setLanguage(newLanguage)
+    localStorage.setItem('preferred-language', newLanguage)
+  }
+
+  const selectLanguage = (newLanguage) => {
+    setLanguage(newLanguage)
+    localStorage.setItem('preferred-language', newLanguage)
+    setLanguageDropdownOpen(false)
+  }
+
+  const toggleLanguageDropdown = () => {
+    setLanguageDropdownOpen(!languageDropdownOpen)
+  }
+
+  const getLanguageInfo = (lang) => {
+    const languageMap = {
+      'pt': { flag: '🇧🇷', name: 'Português', short: 'PT' },
+      'en': { flag: '🇺🇸', name: 'English', short: 'EN' },
+      'es': { flag: '🇪🇸', name: 'Español', short: 'ES' }
+    }
+    return languageMap[lang] || languageMap['pt']
   }
 
   const scrollToSection = (sectionId) => {
@@ -35,22 +80,33 @@ function App() {
     }
   }
 
-  const toggleMobileMenu = () => {
-    const newMenuState = !mobileMenuOpen
-    setMobileMenuOpen(newMenuState)
+  const toggleMobileMenu = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (menuToggleDisabled) return;
+    
+    const newMenuState = !mobileMenuOpen;
+    setMobileMenuOpen(newMenuState);
+    
+    // Adicionar debounce para evitar cliques múltiplos
+    setMenuToggleDisabled(true);
+    setTimeout(() => {
+      setMenuToggleDisabled(false);
+    }, 300);
     
     // Controlar scroll do body
     if (newMenuState) {
-      document.body.classList.add('menu-open')
+      document.body.classList.add('menu-open');
     } else {
-      document.body.classList.remove('menu-open')
+      document.body.classList.remove('menu-open');
     }
-  }
+  };
 
   // Detectar mudanças no tamanho da tela
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768)
+      setIsMobile(window.innerWidth <= 1024)
     }
 
     window.addEventListener('resize', handleResize)
@@ -132,6 +188,42 @@ function App() {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [mobileMenuOpen])
 
+  // Fechar dropdown de idioma ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (languageDropdownOpen && !event.target.closest('.language-dropdown')) {
+        setLanguageDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [languageDropdownOpen])
+
+  // Fechar dropdown de idioma com tecla ESC
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape' && languageDropdownOpen) {
+        setLanguageDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [languageDropdownOpen])
+
+  // Fechar dropdown de idioma ao rolar a página
+  useEffect(() => {
+    const handleScroll = () => {
+      if (languageDropdownOpen) {
+        setLanguageDropdownOpen(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [languageDropdownOpen])
+
   // Traduções
   const translations = {
     pt: {
@@ -147,7 +239,7 @@ function App() {
       aboutTitle: 'Sobre Mim',
       aboutDescription: 'Sou um desenvolvedor apaixonado por tecnologia com experiência em desenvolvimento web e computação em nuvem. Tenho conhecimento sólido em JavaScript, React, Node.js e ferramentas de cloud computing. Sempre busco aprender novas tecnologias e aplicar as melhores práticas em meus projetos.',
       skillsTitle: 'Minhas Habilidades',
-      skills: ['JavaScript', 'React', 'Node.js', 'HTML/CSS', 'Git', 'AWS', 'Docker', 'MongoDB', 'Express.js', 'TypeScript'],
+      skills: ['JavaScript', 'React', 'Node.js', 'HTML/CSS', 'Git', 'AWS', 'Terraform', 'Linux', 'Docker', 'MongoDB'],
       aboutImageAlt: 'Desenvolvimento de código',
       academicTitle: 'Formação Acadêmica',
       academicDescription: 'Minhas certificações e formações que comprovam meu conhecimento e dedicação ao aprendizado contínuo.',
@@ -157,39 +249,39 @@ function App() {
         {
           title: 'AWS Cloud Practitioner',
           issuer: 'Amazon Web Services',
-          date: '2024',
+          date: '2025',
           image: 'https://via.placeholder.com/300x180/FF9900/ffffff?text=AWS',
           link: '#'
         },
         {
-          title: 'React Developer',
-          issuer: 'Meta',
-          date: '2023',
-          image: 'https://via.placeholder.com/300x180/61DAFB/ffffff?text=React',
+          title: 'Terraform Associate',
+          issuer: 'HashiCorp',
+          date: '2025',
+          image: 'https://via.placeholder.com/300x180/7B42BC/ffffff?text=Terraform',
           link: '#'
         },
         {
-          title: 'JavaScript ES6+',
-          issuer: 'JavaScript Institute',
-          date: '2023',
-          image: 'https://via.placeholder.com/300x180/F7DF1E/ffffff?text=JS',
+          title: 'Linux Professional',
+          issuer: 'Linux Foundation',
+          date: '2025',
+          image: 'https://via.placeholder.com/300x180/FCC624/000000?text=Linux',
           link: '#'
         }
       ],
       education: [
         {
-          degree: 'Ciência da Computação',
-          institution: 'Universidade Federal',
-          period: '2020 - 2024',
+          degree: 'Análise e Desenvolvimento de Sistemas',
+          institution: 'FMU',
+          period: '2023 - 2025',
           status: 'Concluído',
-          image: 'https://via.placeholder.com/300x180/4f46e5/ffffff?text=Universidade'
+          image: 'https://via.placeholder.com/300x180/4f46e5/ffffff?text=FMU'
         },
         {
-          degree: 'Técnico em Informática',
-          institution: 'Instituto Técnico',
-          period: '2018 - 2020',
+          degree: 'Segurança da Informação',
+          institution: 'UNICID',
+          period: '2025 - 2026',
           status: 'Concluído',
-          image: 'https://via.placeholder.com/300x180/10b981/ffffff?text=Técnico'
+          image: 'https://via.placeholder.com/300x180/10b981/ffffff?text=UNICID'
         }
       ],
       projectsTitle: 'Meus Projetos',
@@ -254,7 +346,7 @@ function App() {
       aboutTitle: 'About Me',
       aboutDescription: 'I am a technology-passionate developer with experience in web development and cloud computing. I have solid knowledge in JavaScript, React, Node.js, and cloud computing tools. I always seek to learn new technologies and apply best practices in my projects.',
       skillsTitle: 'My Skills',
-      skills: ['JavaScript', 'React', 'Node.js', 'HTML/CSS', 'Git', 'AWS', 'Docker', 'MongoDB', 'Express.js', 'TypeScript'],
+      skills: ['JavaScript', 'React', 'Node.js', 'HTML/CSS', 'Git', 'AWS', 'Terraform', 'Linux', 'Docker', 'MongoDB'],
       aboutImageAlt: 'Code development',
       academicTitle: 'Academic Background',
       academicDescription: 'My certifications and education that demonstrate my knowledge and dedication to continuous learning.',
@@ -264,39 +356,39 @@ function App() {
         {
           title: 'AWS Cloud Practitioner',
           issuer: 'Amazon Web Services',
-          date: '2024',
+          date: '2025',
           image: 'https://via.placeholder.com/300x180/FF9900/ffffff?text=AWS',
           link: '#'
         },
         {
-          title: 'React Developer',
-          issuer: 'Meta',
-          date: '2023',
-          image: 'https://via.placeholder.com/300x180/61DAFB/ffffff?text=React',
+          title: 'Terraform Associate',
+          issuer: 'HashiCorp',
+          date: '2025',
+          image: 'https://via.placeholder.com/300x180/7B42BC/ffffff?text=Terraform',
           link: '#'
         },
         {
-          title: 'JavaScript ES6+',
-          issuer: 'JavaScript Institute',
-          date: '2023',
-          image: 'https://via.placeholder.com/300x180/F7DF1E/ffffff?text=JS',
+          title: 'Linux Professional',
+          issuer: 'Linux Foundation',
+          date: '2025',
+          image: 'https://via.placeholder.com/300x180/FCC624/000000?text=Linux',
           link: '#'
         }
       ],
       education: [
         {
-          degree: 'Computer Science',
-          institution: 'Federal University',
-          period: '2020 - 2024',
+          degree: 'Systems Analysis and Development',
+          institution: 'FMU',
+          period: '2023 - 2025',
           status: 'Completed',
-          image: 'https://via.placeholder.com/300x180/4f46e5/ffffff?text=University'
+          image: 'https://via.placeholder.com/300x180/4f46e5/ffffff?text=FMU'
         },
         {
-          degree: 'Technical in Computer Science',
-          institution: 'Technical Institute',
-          period: '2018 - 2020',
+          degree: 'Information Security',
+          institution: 'UNICID',
+          period: '2025 - 2026',
           status: 'Completed',
-          image: 'https://via.placeholder.com/300x180/10b981/ffffff?text=Technical'
+          image: 'https://via.placeholder.com/300x180/10b981/ffffff?text=UNICID'
         }
       ],
       projectsTitle: 'My Projects',
@@ -347,10 +439,117 @@ function App() {
       phoneLabel: 'Phone',
       linkedinLabel: 'LinkedIn',
       githubLabel: 'GitHub'
+    },
+    es: {
+      name: 'Kaua Cruz',
+      // Navegación
+      navHome: 'Inicio',
+      navProjects: 'Proyectos',
+      navAbout: 'Sobre Mí',
+      navAcademic: 'Académico',
+      navContact: 'Contacto',
+      title: 'Ingeniero de Software y Computación en la Nube',
+      subtitle: '¡Nube e desenvolvimento juntos!',
+      aboutTitle: 'Sobre Mí',
+      aboutDescription: 'Soy un desarrollador apasionado por la tecnología con experiencia en desarrollo web y computación en la nube. Tengo conocimientos sólidos en JavaScript, React, Node.js y herramientas de computación en la nube. Siempre busco aprender nuevas tecnologías e implementar las mejores prácticas en mis proyectos.',
+      skillsTitle: 'Mis Habilidades',
+      skills: ['JavaScript', 'React', 'Node.js', 'HTML/CSS', 'Git', 'AWS', 'Terraform', 'Linux', 'Docker', 'MongoDB'],
+      aboutImageAlt: 'Desarrollo de código',
+      academicTitle: 'Formación Académica',
+      academicDescription: 'Mis certificaciones y formación que demuestran mi conocimiento e dedicação ao aprendizado contínuo.',
+      certificationsTitle: 'Certificaciones',
+      educationTitle: 'Educación',
+      certifications: [
+        {
+          title: 'AWS Cloud Practitioner',
+          issuer: 'Amazon Web Services',
+          date: '2025',
+          image: 'https://via.placeholder.com/300x180/FF9900/ffffff?text=AWS',
+          link: '#'
+        },
+        {
+          title: 'Terraform Associate',
+          issuer: 'HashiCorp',
+          date: '2025',
+          image: 'https://via.placeholder.com/300x180/7B42BC/ffffff?text=Terraform',
+          link: '#'
+        },
+        {
+          title: 'Linux Professional',
+          issuer: 'Linux Foundation',
+          date: '2025',
+          image: 'https://via.placeholder.com/300x180/FCC624/000000?text=Linux',
+          link: '#'
+        }
+      ],
+      education: [
+        {
+          degree: 'Análisis y Desarrollo de Sistemas',
+          institution: 'FMU',
+          period: '2023 - 2025',
+          status: 'Completado',
+          image: 'https://via.placeholder.com/300x180/4f46e5/ffffff?text=FMU'
+        },
+        {
+          degree: 'Seguridad de la Información',
+          institution: 'UNICID',
+          period: '2025 - 2026',
+          status: 'Completado',
+          image: 'https://via.placeholder.com/300x180/10b981/ffffff?text=UNICID'
+        }
+      ],
+      projectsTitle: 'Mis Proyectos',
+      projectsDescription: 'Aquí están algunos de los proyectos que he desarrollado. Cada uno representa una parte de mi camino como desarrollador.',
+      projects: [
+        {
+          title: "E-commerce React",
+          description: "Aplicação de e-commerce desenvolvida com React"
+        },
+        {
+          title: "Gestor de Tareas",
+          description: "Gestor de tarefas com React e Local Storage"
+        },
+        {
+          title: "App del Clima",
+          description: "Aplicação de pronóstico del tempo com API"
+        },
+        {
+          title: "Sitio Portfolio",
+          description: "Sitio web de portafolio pessoal responsivo"
+        },
+        {
+          title: "Plataforma de Blog",
+          description: "Plataforma de blog com sistema de comentários"
+        },
+        {
+          title: "Aplicação de Chat",
+          description: "Aplicação de chat em tempo real"
+        }
+      ],
+      // Contacto
+      contactTitle: 'Ponte en Contacto',
+      contactDescription: '¡Hablemos sobre tu próximo proyecto! Contáctame a través del formulario de abajo o por la información de contacto.',
+      namePlaceholder: 'Tu nombre completo',
+      emailPlaceholder: 'Tu email',
+      subjectPlaceholder: 'Asunto',
+      projectTypePlaceholder: 'Selecciona el tipo de projeto',
+      websiteProject: 'Sitio Web/Landing Page',
+      mobileProject: 'Aplicación Móvil',
+      ecommerceProject: 'E-commerce',
+      consultingProject: 'Consultoría',
+      otherProject: 'Otro',
+      messagePlaceholder: 'Describe tu proyecto o pregunta...',
+      sendButton: 'Enviar Mensaje',
+      formSubmitMessage: '¡Mensaje enviado con éxito! Me pondré en contacto pronto.',
+      contactInfoTitle: 'Información de Contacto',
+      emailLabel: 'Email',
+      phoneLabel: 'Teléfono',
+      linkedinLabel: 'LinkedIn',
+      githubLabel: 'GitHub'
     }
   }
 
-  const currentTranslations = translations[language]
+  const currentTranslations = translations[language] || translations['pt']
 
   return (
     <>
@@ -374,20 +573,13 @@ function App() {
                 className="mobile-menu-toggle"
                 onClick={toggleMobileMenu}
                 aria-label="Menu"
+                type="button"
+                disabled={menuToggleDisabled}
               >
                 {mobileMenuOpen ? <MdClose /> : <MdMenu />}
               </button>
               
               <h1 className="header-title-mobile">{currentTranslations.name}</h1>
-              
-              <div className='header-controls-mobile'>
-                <button onClick={toggleLanguage} className="language-toggle-mobile">
-                  {language === 'pt' ? '🇺🇸 EN' : '🇧🇷 PT'}
-                </button>
-                <button onClick={toggleDarkMode} className="theme-toggle-mobile">
-                  {darkMode ? <MdOutlineDarkMode /> : <MdLightMode />}
-                </button>
-              </div>
             </div>
 
             {/* Menu Mobile Dropdown */}
@@ -422,6 +614,23 @@ function App() {
               >
                 {currentTranslations.navContact}
               </button>
+              
+              {/* Controles de idioma e tema dentro do menu */}
+              <div className="mobile-menu-controls">
+                <button 
+                  onClick={toggleLanguage} 
+                  className="mobile-menu-language"
+                  data-tooltip={language === 'pt' ? 'Mudar para English' : language === 'en' ? 'Cambiar a Español' : 'Mudar para Português'}
+                  aria-label={`Current language: ${language === 'pt' ? 'Português' : language === 'en' ? 'English' : 'Español'}`}
+                >
+                  <span className="language-indicator">
+                    {language === 'pt' ? '🇺🇸 EN' : language === 'en' ? '🇪🇸 ES' : '🇧🇷 PT'}
+                  </span>
+                </button>
+                <button onClick={toggleDarkMode} className="mobile-menu-theme">
+                  {darkMode ? <MdOutlineDarkMode /> : <MdLightMode />}
+                </button>
+              </div>
             </nav>
           </>
         ) : (
@@ -463,9 +672,41 @@ function App() {
             </nav>
 
             <div className='header-controls'>
-              <button onClick={toggleLanguage} className="language-toggle">
-                {language === 'pt' ? '🇺🇸 EN' : '🇧🇷 PT'}
-              </button>
+              <div className={`language-dropdown ${languageDropdownOpen ? 'open' : ''}`}>
+                <button 
+                  onClick={toggleLanguageDropdown}
+                  className="language-toggle"
+                  aria-label={`Current language: ${getLanguageInfo(language).name}`}
+                  aria-expanded={languageDropdownOpen}
+                  aria-haspopup="listbox"
+                  role="button"
+                >
+                  <span className="language-current">
+                    {getLanguageInfo(language).flag} {getLanguageInfo(language).short}
+                  </span>
+                  <span className="dropdown-arrow">▼</span>
+                </button>
+                
+                {languageDropdownOpen && (
+                  <div 
+                    className="language-dropdown-menu"
+                    role="listbox"
+                    aria-label="Select language"
+                  >
+                    {['pt', 'en', 'es'].map((lang) => (
+                      <button
+                        key={lang}
+                        onClick={() => selectLanguage(lang)}
+                        className={`language-option ${language === lang ? 'active' : ''}`}
+                        role="option"
+                        aria-selected={language === lang}
+                      >
+                        {getLanguageInfo(lang).flag} {getLanguageInfo(lang).name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
               <button onClick={toggleDarkMode} className="theme-toggle">
                 {darkMode ? <MdOutlineDarkMode id='dark-mode-icon'/> : <MdLightMode />}
               </button>
