@@ -59,7 +59,7 @@ function Projects({ translations }) {
   const projects = [
     {
       id: 1,
-      image: "../../../public/vtexx.png",
+      image: "/vtexx.png",
       repository: "https://github.com/kauacruz/ecommerce-react"
     },
     {
@@ -74,17 +74,17 @@ function Projects({ translations }) {
     },
     {
       id: 4,
-      image: "https://via.placeholder.com/300x200/8b5cf6/ffffff?text=Portfolio",
+      image: "/rick-api.png",
       repository: "https://github.com/kauacruz/portfolio"
     },
     {
       id: 5,
-      image: "../../../public/blog-angular.png",
+      image: "/blog-angular.png",
       repository: "https://github.com/kauacruz/blog-platform"
     },
     {
       id: 6,
-      image: "../../../public/raycast.png",
+      image: "/raycast.png",
       repository: "https://github.com/kauacruz/chat-app"
     }
   ];

@@ -300,16 +300,16 @@ function App() {
           description: "Aplicativo de previsão do tempo com API"
         },
         {
-          title: "Site Portfolio",
-          description: "Site de portfólio pessoal responsivo"
+          title: "Rick API",
+          description: "SPA feito em React e Sass com API de Rick and Morty"
         },
         {
           title: "Plataforma de Blog",
-          description: "Plataforma de blog com sistema de comentários"
+          description: "Plataforma de blog com sistema de comentários feita em Angular"
         },
         {
-          title: "Aplicação de Chat",
-          description: "Aplicação de chat em tempo real"
+          title: "Landing page",
+          description: "Landing page para sistema de produtividade feita em Angular"
         }
       ],
       // Contato
@@ -407,16 +407,16 @@ function App() {
           description: "Weather forecast application with API"
         },
         {
-          title: "Portfolio Website",
-          description: "Responsive personal portfolio website"
+          title: "Rick API",
+          description: "SPA built with React and Sass using Rick and Morty API"
         },
         {
           title: "Blog Platform",
-          description: "Blog platform with comment system"
+          description: "Blog platform with comment system built with Angular"
         },
         {
-          title: "Chat Application",
-          description: "Real-time chat application"
+          title: "Landing page",
+          description: "Landing page for productivity system built with Angular"
         }
       ],
       // Contact
@@ -514,16 +514,16 @@ function App() {
           description: "Aplicação de pronóstico del tempo com API"
         },
         {
-          title: "Sitio Portfolio",
-          description: "Sitio web de portafolio pessoal responsivo"
+          title: "Rick API",
+          description: "SPA hecho con React y Sass usando API de Rick and Morty"
         },
         {
           title: "Plataforma de Blog",
-          description: "Plataforma de blog com sistema de comentários"
+          description: "Plataforma de blog con sistema de comentarios hecha en Angular"
         },
         {
-          title: "Aplicação de Chat",
-          description: "Aplicação de chat em tempo real"
+          title: "Landing page",
+          description: "Landing page para sistema de productividad hecha en Angular"
         }
       ],
       // Contacto
