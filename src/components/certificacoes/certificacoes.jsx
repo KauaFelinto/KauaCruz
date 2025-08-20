@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import './certificacoes.css';
 
 function Certificacoes({ translations }) {
@@ -6,6 +6,8 @@ function Certificacoes({ translations }) {
   const [currentCertSlide, setCurrentCertSlide] = useState(0);
   const [currentEduSlide, setCurrentEduSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState({ src: '', alt: '', title: '' });
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -69,6 +71,41 @@ function Certificacoes({ translations }) {
     setCurrentEduSlide(index);
   };
 
+  // Funções do modal - Otimizadas para performance
+  const openModal = useCallback((imageSrc, imageAlt, imageTitle) => {
+    requestAnimationFrame(() => {
+      setModalImage({ src: imageSrc, alt: imageAlt, title: imageTitle });
+      setModalOpen(true);
+    });
+    
+    // Use requestAnimationFrame para otimizar a mudança de overflow
+    requestAnimationFrame(() => {
+      document.body.style.overflow = 'hidden';
+    });
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+    
+    // Delay para permitir animação de fechamento
+    setTimeout(() => {
+      setModalImage({ src: '', alt: '', title: '' });
+      document.body.style.overflow = 'unset';
+    }, 150); // Reduzido para ser mais responsivo
+  }, []);
+
+  // Fechar modal com ESC
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape' && modalOpen) {
+        closeModal();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [modalOpen, closeModal]);
+
   return (
     <section className={`certificacoes ${isVisible ? 'animate' : ''}`} ref={sectionRef}>
       <div className="certificacoes-content">
@@ -91,11 +128,9 @@ function Certificacoes({ translations }) {
                   >
                     {translations.certifications.map((certification, index) => (
                       <div key={index} className="carousel-slide">
-                        <a 
-                          href={certification.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
+                        <div 
                           className="certification-card"
+                          onClick={() => openModal(certification.image, certification.title, certification.title)}
                         >
                           <div className="certification-image">
                             <img src={certification.image} alt={certification.title} />
@@ -105,7 +140,7 @@ function Certificacoes({ translations }) {
                             <p className="certification-issuer">{certification.issuer}</p>
                             <p className="certification-date">{certification.date}</p>
                           </div>
-                        </a>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -124,7 +159,7 @@ function Certificacoes({ translations }) {
                 {/* Indicadores */}
                 <div className="carousel-indicators">
                   {translations.certifications.map((_, index) => (
-                    <button
+                    <span
                       key={index}
                       className={`indicator ${currentCertSlide === index ? 'active' : ''}`}
                       onClick={() => goToCertSlide(index)}
@@ -136,15 +171,13 @@ function Certificacoes({ translations }) {
               // Grid para desktop/tablet
               <div className="certifications-grid">
                 {translations.certifications.map((certification, index) => (
-                  <a 
+                  <div 
                     key={index} 
-                    href={certification.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
                     className="certification-card"
                     style={{
                       animationDelay: isVisible ? `${index * 0.15}s` : '0s'
                     }}
+                    onClick={() => openModal(certification.image, certification.title, certification.title)}
                   >
                     <div className="certification-image">
                       <img src={certification.image} alt={certification.title} />
@@ -154,7 +187,7 @@ function Certificacoes({ translations }) {
                       <p className="certification-issuer">{certification.issuer}</p>
                       <p className="certification-date">{certification.date}</p>
                     </div>
-                  </a>
+                  </div>
                 ))}
               </div>
             )}
@@ -204,7 +237,7 @@ function Certificacoes({ translations }) {
                 {/* Indicadores */}
                 <div className="carousel-indicators">
                   {translations.education.map((_, index) => (
-                    <button
+                    <span
                       key={index}
                       className={`indicator ${currentEduSlide === index ? 'active' : ''}`}
                       onClick={() => goToEduSlide(index)}
@@ -239,6 +272,26 @@ function Certificacoes({ translations }) {
           </div>
         </div>
       </div>
+
+      {/* Modal para exibir imagens - Renderizado condicionalmente */}
+      {modalOpen && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeModal} aria-label="Fechar modal">
+              ×
+            </button>
+            <div className="modal-image-container">
+              <img 
+                src={modalImage.src} 
+                alt={modalImage.alt} 
+                className="modal-image"
+                loading="eager" // Carregamento prioritário para modal
+              />
+              <h3 className="modal-title">{modalImage.title}</h3>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

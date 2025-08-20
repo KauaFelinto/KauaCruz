@@ -141,7 +141,7 @@ function Projects({ translations }) {
           {/* Indicadores */}
           <div className="carousel-indicators">
             {projects.map((_, index) => (
-              <button
+              <span
                 key={index}
                 className={`indicator ${currentSlide === index ? 'active' : ''}`}
                 onClick={() => goToSlide(index)}

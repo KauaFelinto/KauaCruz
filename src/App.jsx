@@ -250,7 +250,7 @@ function App() {
           title: 'AWS Cloud Practitioner',
           issuer: 'Amazon Web Services',
           date: '2025',
-          image: 'https://via.placeholder.com/300x180/FF9900/ffffff?text=AWS',
+          image: '/AWS-Cloud-Practitioner.png',
           link: '#'
         },
         {
@@ -261,10 +261,10 @@ function App() {
           link: '#'
         },
         {
-          title: 'Linux Professional',
+          title: 'LPI Essentials',
           issuer: 'Linux Foundation',
           date: '2025',
-          image: 'https://via.placeholder.com/300x180/FCC624/000000?text=Linux',
+          image: '/lpi-alura-linux.png',
           link: '#'
         }
       ],
@@ -273,15 +273,15 @@ function App() {
           degree: 'Análise e Desenvolvimento de Sistemas',
           institution: 'FMU',
           period: '2023 - 2025',
-          status: 'Concluído',
-          image: 'https://via.placeholder.com/300x180/4f46e5/ffffff?text=FMU'
+          status: 'Em andamento',
+          image: '/fmupalestra.jpg'
         },
         {
           degree: 'Segurança da Informação',
           institution: 'UNICID',
           period: '2025 - 2026',
-          status: 'Concluído',
-          image: 'https://via.placeholder.com/300x180/10b981/ffffff?text=UNICID'
+          status: 'Em andamento',
+          image: '/cruzeirodosul.jpg'
         }
       ],
       projectsTitle: 'Meus Projetos',
@@ -357,7 +357,7 @@ function App() {
           title: 'AWS Cloud Practitioner',
           issuer: 'Amazon Web Services',
           date: '2025',
-          image: 'https://via.placeholder.com/300x180/FF9900/ffffff?text=AWS',
+          image: '/AWS-Cloud-Practitioner.png',
           link: '#'
         },
         {
@@ -368,10 +368,10 @@ function App() {
           link: '#'
         },
         {
-          title: 'Linux Professional',
+          title: 'LPI Essentials',
           issuer: 'Linux Foundation',
           date: '2025',
-          image: 'https://via.placeholder.com/300x180/FCC624/000000?text=Linux',
+          image: '/lpi-alura-linux.png',
           link: '#'
         }
       ],
@@ -380,15 +380,15 @@ function App() {
           degree: 'Systems Analysis and Development',
           institution: 'FMU',
           period: '2023 - 2025',
-          status: 'Completed',
-          image: 'https://via.placeholder.com/300x180/4f46e5/ffffff?text=FMU'
+          status: 'In progress',
+          image: '/fmupalestra.jpg'
         },
         {
           degree: 'Information Security',
           institution: 'UNICID',
           period: '2025 - 2026',
-          status: 'Completed',
-          image: 'https://via.placeholder.com/300x180/10b981/ffffff?text=UNICID'
+          status: 'In progress',
+          image: '/cruzeirodosul.jpg'
         }
       ],
       projectsTitle: 'My Projects',
@@ -464,7 +464,7 @@ function App() {
           title: 'AWS Cloud Practitioner',
           issuer: 'Amazon Web Services',
           date: '2025',
-          image: 'https://via.placeholder.com/300x180/FF9900/ffffff?text=AWS',
+          image: '/AWS-Cloud-Practitioner.png',
           link: '#'
         },
         {
@@ -475,10 +475,10 @@ function App() {
           link: '#'
         },
         {
-          title: 'Linux Professional',
+          title: 'LPI Essentials',
           issuer: 'Linux Foundation',
           date: '2025',
-          image: 'https://via.placeholder.com/300x180/FCC624/000000?text=Linux',
+          image: '/lpi-alura-linux.png',
           link: '#'
         }
       ],
@@ -487,15 +487,15 @@ function App() {
           degree: 'Análisis y Desarrollo de Sistemas',
           institution: 'FMU',
           period: '2023 - 2025',
-          status: 'Completado',
-          image: 'https://via.placeholder.com/300x180/4f46e5/ffffff?text=FMU'
+          status: 'En progreso',
+          image: '/fmupalestra.jpg'
         },
         {
           degree: 'Seguridad de la Información',
           institution: 'UNICID',
           period: '2025 - 2026',
-          status: 'Completado',
-          image: 'https://via.placeholder.com/300x180/10b981/ffffff?text=UNICID'
+          status: 'En progreso',
+          image: '/cruzeirodosul.jpg'
         }
       ],
       projectsTitle: 'Mis Proyectos',

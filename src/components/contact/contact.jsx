@@ -231,51 +231,53 @@ ${formData.message}
           </form>
 
           <div className="contact-info">
-            <h3>{translations.contactInfoTitle}</h3>
-            <div className="contact-item">
-              <div className="contact-icon"><MdEmail /></div>
-              <div className="contact-details">
-                <span className="contact-label">{translations.emailLabel}</span>
-                <a href="mailto:kauafelintoc@gmail.com" className="contact-link">
-                  kauafelintoc@gmail.com
-                </a>
+            <h3 className="contact-info-title">{translations.contactInfoTitle}</h3>
+            <div className="contact-items-grid">
+              <div className="contact-item">
+                <div className="contact-icon"><MdEmail /></div>
+                <div className="contact-details">
+                  <span className="contact-label">{translations.emailLabel}</span>
+                  <a href="mailto:kauafelintoc@gmail.com" className="contact-link">
+                    kauafelintoc@gmail.com
+                  </a>
+                </div>
               </div>
-            </div>
-            <div className="contact-item">
-              <div className="contact-icon"><FaSquarePhone /></div>
-              <div className="contact-details">
-                <span className="contact-label">{translations.phoneLabel}</span>
-                <a href="tel:+5511994421740" className="contact-link">
-                  +55 (11) 99442-1740
-                </a>
+              <div className="contact-item">
+                <div className="contact-icon"><FaSquarePhone /></div>
+                <div className="contact-details">
+                  <span className="contact-label">{translations.phoneLabel}</span>
+                  <a href="tel:+5511994421740" className="contact-link">
+                    +55 (11) 99442-1740
+                  </a>
+                </div>
               </div>
-            </div>
-            <div className="contact-item">
-              <div className="contact-icon"><FaLinkedin /></div>
-              <div className="contact-details">
-                <span className="contact-label">{translations.linkedinLabel}</span>
-                <a 
-                  href="https://www.linkedin.com/in/kauã-felinto" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="contact-link"
-                >
-                  linkedin.com/in/kauã-felinto
-                </a>
+              <div className="contact-item">
+                <div className="contact-icon"><FaLinkedin /></div>
+                <div className="contact-details">
+                  <span className="contact-label">{translations.linkedinLabel}</span>
+                  <a 
+                    href="https://www.linkedin.com/in/kauã-felinto" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="contact-link"
+                  >
+                    linkedin.com/in/kauã-felinto
+                  </a>
+                </div>
               </div>
-            </div>
-            <div className="contact-item">
-              <div className="contact-icon"><FaGithubSquare /></div>
-              <div className="contact-details">
-                <span className="contact-label">{translations.githubLabel}</span>
-                <a 
-                  href="https://github.com/KauaFelinto" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="contact-link"
-                >
-                  github.com/KauaFelinto
-                </a>
+              <div className="contact-item">
+                <div className="contact-icon"><FaGithubSquare /></div>
+                <div className="contact-details">
+                  <span className="contact-label">{translations.githubLabel}</span>
+                  <a 
+                    href="https://github.com/KauaFelinto" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="contact-link"
+                  >
+                    github.com/KauaFelinto
+                  </a>
+                </div>
               </div>
             </div>
           </div>

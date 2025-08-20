@@ -101,14 +101,14 @@
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   border: 1px solid #e5e7eb;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.6s ease;
   display: block;
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(30px) translateZ(0);
   width: 100%;
   max-width: 350px;
+  will-change: transform, opacity, box-shadow;
+  backface-visibility: hidden; /* Optimize for animations */
 }
 
 .certificacoes.animate .certification-card,
@@ -118,11 +118,9 @@
 
 .certification-card:hover,
 .education-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px) translateZ(0);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
   border-color: #4f46e5;
-  text-decoration: none;
-  color: inherit;
 }
 
 .certification-image,
@@ -142,12 +140,14 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .certification-card:hover .certification-image img,
 .education-card:hover .education-image img {
-  transform: scale(1.05);
+  transform: scale(1.05) translateZ(0);
 }
 
 .certification-info,
@@ -182,7 +182,7 @@
 
 .education-status {
   font-size: 0.85rem;
-  color: #10b981;
+  color: #f97316;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -232,7 +232,9 @@
 .carousel-track {
   display: flex;
   width: 100%;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.25s ease-in-out;
+  will-change: transform;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 .carousel-slide {
@@ -245,13 +247,13 @@
   width: 100%;
   margin: 0;
   display: block;
+  margin-bottom: 15px;
 }
 
 /* Botões de navegação do carrossel */
 .carousel-nav {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 85%;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -261,7 +263,7 @@
 
 .carousel-btn {
   background: rgba(255, 255, 255, 0.9);
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -271,14 +273,17 @@
   cursor: pointer;
   font-size: 1.5rem;
   color: #333;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   pointer-events: auto;
+  will-change: transform, background-color;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .carousel-btn:hover {
   background: rgba(255, 255, 255, 1);
-  transform: scale(1.1);
+  transform: scale(1.05) translateZ(0);
 }
 
 .carousel-btn.prev {
@@ -300,8 +305,8 @@
 }
 
 .indicator {
-  width: 12px;
-  height: 12px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   border: 2px solid rgba(0, 0, 0, 0.1);
   background: rgba(0, 0, 0, 0.3);
@@ -394,7 +399,7 @@ body.dark-mode .education-period {
 }
 
 body.dark-mode .education-status {
-  color: #10b981;
+  color: #fb923c;
 }
 
 body.dark-mode .certification-image,
@@ -556,5 +561,160 @@ body.dark-mode .education-image {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.2s ease-out;
+  will-change: opacity;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.2s ease-out;
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+  transition: all 0.15s ease;
+  will-change: transform, background-color;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05) translateZ(0);
+}
+
+.modal-image-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  will-change: transform;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+.modal-title {
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Animações do modal - Otimizadas para performance */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px) translateZ(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0) translateZ(0);
+  }
+}
+
+/* Dark mode para modal */
+body.dark-mode .modal-content {
+  background: #374151;
+}
+
+body.dark-mode .modal-title {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.dark-mode .modal-close {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+body.dark-mode .modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Cursor pointer para cards clicáveis - Otimizado */
+.certification-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform, box-shadow;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Responsividade do modal */
+@media (max-width: 768px) {
+  .modal-content {
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+  
+  .modal-image-container {
+    padding: 1rem;
+  }
+  
+  .modal-image {
+    max-height: 60vh;
+  }
+  
+  .modal-title {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+  
+  .modal-close {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+    top: 10px;
+    right: 10px;
   }
 }

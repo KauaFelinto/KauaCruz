@@ -151,10 +151,77 @@
   font-weight: 600;
 }
 
+/* Grid para os itens de contato em dispositivos móveis */
+.contact-items-grid {
+  display: grid;
+  gap: 20px;
+}
+
+/* Layout em grid apenas para dispositivos móveis */
+@media (max-width: 768px) {
+  .contact-items-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  /* Esconder o título "Informações de Contato" em dispositivos móveis */
+  .contact-info-title {
+    display: none;
+  }
+  
+  /* Ajustar layout dos itens para mobile */
+  .contact-item {
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .contact-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  /* Esconder o label em dispositivos móveis */
+  .contact-label {
+    display: none;
+  }
+  
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-items-grid {
+    gap: 15px;
+  }
+  
+  .contact-item {
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+  }
+  
+  .contact-icon {
+    font-size: 1.8rem;
+    width: 45px;
+    height: 45px;
+    margin-bottom: 8px;
+  }
+  
+  .contact-link {
+    font-size: 0.85rem;
+  }
+}
+
 .contact-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 25px;
   padding: 20px;
   background: var(--input-bg);
   border-radius: 12px;
@@ -266,6 +333,12 @@ body.dark-mode .submit-status.info {
     min-height: auto;
   }
 
+  .contact.animate {
+    margin-top: 150px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   .contact h2 {
     font-size: 2.2rem;
     margin-bottom: 15px;
@@ -311,6 +384,8 @@ body.dark-mode .submit-status.info {
   .contact-item {
     padding: 15px;
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
   }
 
   .contact-icon {
@@ -332,6 +407,12 @@ body.dark-mode .submit-status.info {
 @media (max-width: 480px) {
   .contact {
     padding: 60px 10px 40px 10px;
+  }
+
+  .contact.animate {
+    margin-top: 150px;
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .contact h2 {
@@ -375,7 +456,7 @@ body.dark-mode .submit-status.info {
   }
 
   .contact-item {
-    flex-direction: row;
+    flex-direction: column;
     text-align: left;
     padding: 12px 10px;
     margin-bottom: 10px;
